@@ -244,7 +244,7 @@ export function ResumePage() {
           </p>
         </section>
 
-        <section className="section">
+        <section className="section mb-5">
            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <HardHat size={24} /> Projects
           </h2>
@@ -261,7 +261,7 @@ export function ResumePage() {
           </div>
         </section>
 
-        <section className="section print-break-before">
+        <section className="section print-break-before-experience">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Briefcase size={24} /> Experience
           </h2>
@@ -280,7 +280,7 @@ export function ResumePage() {
           </div>
         </section>
 
-        <section className="section print-break-before">
+        <section className="section print-break-before-skills">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Wrench size={24} /> Technical Skills
           </h2>
