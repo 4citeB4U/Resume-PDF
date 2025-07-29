@@ -2,7 +2,6 @@
 
 import { z } from 'zod';
 import { customizeExecutiveSummary } from '@/ai/flows/customize-executive-summary';
-import { RESUME_TEXT } from '@/lib/data';
 
 const summarySchema = z.object({
   jobDescription: z.string().optional(),
@@ -17,7 +16,7 @@ export async function getExecutiveSummary(formData: FormData) {
     });
 
     const result = await customizeExecutiveSummary({
-      resumeText: RESUME_TEXT,
+      resumeText: `Self-taught developer, builder, and business owner with 15+ years of experience in logistics, operations, and tech innovation. Creator of dozens of full-stack projects across voice AI, logistics forms, business portfolios, CRM platforms, and community tools. Combines hands-on blue-collar experience with advanced AI and automation development. Comfortable on the road, in the field, or writing code in the terminal.`,
       jobDescription: validatedData.jobDescription,
       keywords: validatedData.keywords,
     });
