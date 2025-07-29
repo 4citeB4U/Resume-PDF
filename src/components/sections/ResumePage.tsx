@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { QRCodeComponent } from '@/components/ui/qr-code';
 
 const professionalSummary =
   'Self-taught developer, builder, and business owner with 15+ years of experience in logistics, operations, and tech innovation. Creator of dozens of full-stack projects across voice AI, logistics forms, business portfolios, CRM platforms, and community tools. Combines hands-on blue-collar experience with advanced AI and automation development. Comfortable on the road, in the field, or writing code in the terminal.';
@@ -199,8 +200,18 @@ export function ResumePage() {
 
 
   return (
-    <div id="resume-content" className="bg-white text-gray-800 p-4 sm:p-12 rounded-lg shadow-2xl printable-area" style={{ fontSize: '90%' }}>
-      <header className="flex flex-col sm:flex-row items-center gap-8 mb-12 text-center sm:text-left">
+    <div id="resume-content" className="bg-white text-gray-800 p-4 sm:p-12 rounded-lg shadow-2xl printable-area relative" style={{ fontSize: '90%' }}>
+      {/* QR Code in top-right corner */}
+      <div className="absolute top-4 right-4 sm:top-8 sm:right-8 flex flex-col items-center">
+        <QRCodeComponent 
+          value="https://4citeb4u.github.io/Resume-PDF" 
+          size={80}
+          className="border border-gray-200 rounded-lg p-1 bg-white shadow-sm"
+        />
+        <p className="text-xs text-gray-500 mt-1 text-center">Scan for<br />live resume</p>
+      </div>
+
+      <header className="flex flex-col sm:flex-row items-center gap-8 mb-12 text-center sm:text-left pr-24">
         <Image
           src="/picoflee.jpg"
           alt="Leonard J. Lee"
