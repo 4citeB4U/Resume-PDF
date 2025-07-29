@@ -202,7 +202,7 @@ export function ResumePage() {
     <div id="resume-content" className="bg-white text-gray-800 p-4 sm:p-12 rounded-lg shadow-2xl printable-area" style={{ fontSize: '90%' }}>
       <header className="flex flex-col sm:flex-row items-center gap-8 mb-12 text-center sm:text-left">
         <Image
-          src="https://placehold.co/120x120.png"
+          src="/picoflee.jpg"
           alt="Leonard J. Lee"
           width={120}
           height={120}
@@ -246,8 +246,8 @@ export function ResumePage() {
             <HardHat size={24} /> Projects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-            {projects.map((project, idx) => (
-               <div key={idx} className="project-card border border-gray-200 p-2 rounded-lg bg-gray-50/50 hover:shadow-md transition-shadow duration-300 ease-in-out">
+            {projects.map((project) => (
+               <div key={project.title} className="project-card border border-gray-200 p-2 rounded-lg bg-gray-50/50 hover:shadow-md transition-shadow duration-300 ease-in-out">
                 <h3 className="font-semibold text-teal-600 text-lg">{project.title}</h3>
                 <p className="text-gray-600 text-sm mb-2">{project.description}</p>
                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-blue-600 hover:underline">
@@ -263,8 +263,8 @@ export function ResumePage() {
             <Briefcase size={24} /> Experience
           </h2>
           <div className="space-y-4 mt-6">
-            {experiences.map((exp, idx) => (
-              <div key={idx} className={`experience-card border border-gray-200 p-2 rounded-lg bg-gray-50/50 ${exp.role === 'Landscape Crew Manager' ? 'text-[90%]' : ''}`}>
+            {experiences.map((exp) => (
+              <div key={`${exp.role}-${exp.company}`} className={`experience-card border border-gray-200 p-2 rounded-lg bg-gray-50/50 ${exp.role === 'Landscape Crew Manager' ? 'text-[90%]' : ''}`}>
                 <h3 className="text-xl font-semibold text-gray-900">{exp.role}</h3>
                 <p className="text-md text-gray-600 mb-2">{exp.company}</p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
