@@ -147,12 +147,14 @@ export function ResumePage() {
       console.error('Resume content element not found');
       return;
     }
-
+    
+    // Hide the download button for the screenshot
     if (downloadButton) downloadButton.style.display = 'none';
 
     try {
+      // Use html2canvas to take a "screenshot" of the content
       const canvas = await html2canvas(content, {
-        scale: 2, 
+        scale: 2, // Higher scale for better quality
         useCORS: true,
         logging: false,
         width: content.scrollWidth,
@@ -160,7 +162,7 @@ export function ResumePage() {
         windowWidth: content.scrollWidth,
         windowHeight: content.scrollHeight,
       });
-      
+
       const pdf = new jsPDF({
         orientation: 'p',
         unit: 'mm',
@@ -178,11 +180,13 @@ export function ResumePage() {
 
       let position = 0;
       let pageCount = 1;
-      
-      pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, totalPdfHeight);
+
+      // Add the first page
+      pdf.addImage(canvas, 'PNG', 0, 0, pdfWidth, totalPdfHeight);
       
       let heightLeft = totalPdfHeight - pdfHeight;
 
+      // Add subsequent pages if the content is longer than one page
       while (heightLeft > 0) {
         position = -(pdfHeight * pageCount);
         pdf.addPage();
@@ -196,6 +200,7 @@ export function ResumePage() {
     } catch (error) {
       console.error("Error generating PDF:", error);
     } finally {
+      // Show the download button again
       if (downloadButton) downloadButton.style.display = 'block';
     }
   };
@@ -244,7 +249,7 @@ export function ResumePage() {
           </p>
         </section>
 
-        <section className="section mb-10">
+        <section className="section mb-10 pb-5">
            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <HardHat size={24} /> Projects
           </h2>
@@ -268,7 +273,7 @@ export function ResumePage() {
           <div className="space-y-6">
             {experiences.map((exp, idx) => (
               <div key={idx} className="experience-card border-t-2 border-teal-100 pt-4">
-                <h3 className="text-lg font-semibold text-gray-900">{exp.role}</h3>
+                <h3 className="text-xl font-semibold text-gray-900">{exp.role}</h3>
                 <p className="text-md text-gray-600 mb-2">{exp.company}</p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
                     {exp.items.map((item, itemIdx) => (
