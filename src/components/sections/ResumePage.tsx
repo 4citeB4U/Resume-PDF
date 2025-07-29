@@ -21,59 +21,50 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 const professionalSummary =
-  'Visionary technologist and infrastructure leader with 20+ years spanning software, logistics, city operations, and AI development. Creator of the LEEWAY™ framework and Agent Lee, a voice-powered AI assistant. Adept in React, Python, Docker, heavy equipment ops, and real-world logistics architecture.';
+  'Self-taught developer, builder, and business owner with 15+ years of experience in logistics, operations, and tech innovation. Creator of dozens of full-stack projects across voice AI, logistics forms, business portfolios, CRM platforms, and community tools. Combines hands-on blue-collar experience with advanced AI and automation development. Comfortable on the road, in the field, or writing code in the terminal.';
 
 const experiences = [
   {
     role: 'Founder / Full-Stack Developer',
     company: 'RapidWebDevelop LLC / Agent Lee – Milwaukee, WI (2022 – Present)',
     items: [
-      'Developed 30+ advanced web and AI applications. Creator of Agent Lee, voice tools, CRM and LMS platforms.'
+      'Developed 30+ repositories including: AgentLee3 (AI voice assistant), LEECRM, LEEWAYSTANDARDSdocs (LMS), and various business tools.',
+      'Built Agent Lee AI System using React, FastAPI, & Docker.',
+      'Designed gamified front-end LMS platforms.',
+      'Forked and contributed to GPT-engineer, BitNet, Whisper.'
+    ],
+  },
+  {
+    role: 'Owner / Fleet Manager',
+    company: 'Carriers Logistics LLC – Milwaukee, WI (2008 – Present)',
+    items: [
+        'Created logistics/delivery service.',
+        'Built internal tracking tools.',
+        'Organized donation drives.'
     ],
   },
   {
     role: 'Night Driver Supervisor',
     company: 'Crothall Laundry Services – Oak Creek, WI (2010 – 2014)',
     items: [
-        'Managed industrial delivery routes',
-        'Oversaw fleet maintenance'
+        'Managed industrial delivery routes.',
+        'Oversaw fleet maintenance.'
     ],
   },
   {
     role: 'Senior Area Manager',
     company: 'International Profit Associates – Buffalo Grove, IL (2004 – 2007)',
     items: [
-      'Led B2B business dev & training',
+      'Led B2B business dev & training.',
     ],
   },
   {
     role: 'Landscape Crew Manager',
     company: 'Nevels Joe Landscape Co. – Grafton, WI (2001 – 2004)',
     items: [
-        'Managed team schedules and design',
+        'Managed team schedules and design.',
     ],
   },
-  {
-    role: 'Equipment & Infrastructure Technician',
-    company: 'City of Milwaukee',
-    items: [
-        'Worked on bridges, building restoration, concrete work, stairwells, electrical, plumbing and streetcar maintenance (The Hop).'
-    ]
-  },
-  {
-    role: 'Project Manager',
-    company: 'Nevels Joe Landscaping',
-    items: [
-      'Led landscaping projects on Milwaukee lakefront including tree layouts, sculpture park, museum grounds, and memorial paths.'
-    ]
-  },
-  {
-    role: 'Owner / Fleet Manager',
-    company: 'Carriers Logistics LLC',
-    items: [
-        'Managed junk removal and community services; trained youth and returning citizens in logistics.'
-    ]
-  }
 ];
 
 const projects = [
@@ -110,10 +101,10 @@ const projects = [
 ];
 
 const skills = {
-  'Programming': ['Python', 'JavaScript', 'TypeScript', 'HTML/CSS', 'React'],
-  'Backend & AI': ['FastAPI', 'Node.js', 'Gemini', 'Whisper', 'LLaMA', 'Docker'],
-  'Dev Tools': ['GitHub', 'VS Code', 'EmailJS', 'PowerShell'],
-  'Trades': ['Millwright', 'CDL', 'Electrical', 'Plumbing', 'Carpentry'],
+  'Frontend': ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React'],
+  'Backend': ['Python', 'FastAPI', 'Node.js', 'Docker', 'Shell'],
+  'AI & Voice': ['Gemini 2.5', 'Whisper', 'LiveKit', 'GPT-engineer', 'LLaMA'],
+  'Tools': ['GitHub', 'Trello', 'Peachtree', 'EmailJS', 'Slack', 'Microsoft Office'],
 };
 
 const certifications = [
@@ -127,10 +118,10 @@ const certifications = [
 ];
 
 const awards = [
-    'Fleet Maintenance Commendation – City of Milwaukee',
-    'Streetcar Operator Recognition – The Hop, Milwaukee',
-    'Public Works Safety Award',
-    'Youth Mentorship Leader Award',
+    'City of Milwaukee Fleet Maintenance Commendation',
+    'Public Works Safety Excellence Award',
+    'Milwaukee Youth Mentorship Leader',
+    'TWIC Certified, DOT/FEMA Compliance',
 ];
 
 const communityRoles = [
@@ -143,7 +134,7 @@ const education = {
   degree: 'Associate of Applied Science – Business',
   college: 'Bryant & Stratton College',
   details: 'GPA: 3.8',
-  focus: ''
+  focus: 'Leadership, Project Management, Urban Studies, Logistics & Supply Chain'
 };
 
 
@@ -160,21 +151,15 @@ export function ResumePage() {
     if (downloadButton) downloadButton.style.display = 'none';
 
     try {
-      // Standard A4 paper size in pixels at 96 DPI
-      // A4 is 210mm x 297mm.
-      // We will render the content at a width that fits a PDF page.
-      const A4_PAPER_WIDTH_MM = 210;
-      const A4_PAPER_HEIGHT_MM = 297;
-      
       const canvas = await html2canvas(content, {
-        scale: 2, // Use a higher scale for better quality
+        scale: 2, 
         useCORS: true,
         logging: false,
+        width: content.scrollWidth,
+        height: content.scrollHeight,
+        windowWidth: content.scrollWidth,
+        windowHeight: content.scrollHeight,
       });
-
-      const canvasWidth = canvas.width;
-      const canvasHeight = canvas.height;
-      const canvasAspectRatio = canvasWidth / canvasHeight;
 
       const pdf = new jsPDF({
         orientation: 'p',
@@ -185,19 +170,20 @@ export function ResumePage() {
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       
-      // Calculate the height of the canvas image in the PDF
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+      const canvasAspectRatio = canvasWidth / canvasHeight;
+
       const imgHeightInPdf = pdfWidth / canvasAspectRatio;
       
       let heightLeft = imgHeightInPdf;
       let position = 0;
 
-      // Add the first page
-      pdf.addImage(canvas, 'PNG', 0, 0, pdfWidth, imgHeightInPdf);
+      pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, imgHeightInPdf);
       heightLeft -= pdfHeight;
 
-      // Add new pages if content is longer than one page
       while (heightLeft > 0) {
-        position = -heightLeft;
+        position -= pdfHeight;
         pdf.addPage();
         pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, imgHeightInPdf);
         heightLeft -= pdfHeight;
@@ -363,3 +349,5 @@ export function ResumePage() {
     </div>
   );
 }
+
+    
