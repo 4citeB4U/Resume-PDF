@@ -17,6 +17,8 @@ import {
   Building,
   HardHat,
 } from 'lucide-react';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 const professionalSummary =
   'Self-taught developer, builder, and business owner with 15+ years of experience in logistics, operations, and tech innovation. Creator of dozens of full-stack projects across voice AI, logistics forms, business portfolios, CRM platforms, and community tools. Combines hands-on blue-collar experience with advanced AI and automation development. Comfortable on the road, in the field, or writing code in the terminal.';
@@ -137,12 +139,70 @@ const education = {
 };
 
 export function ResumePage() {
-  const handlePrint = () => {
-    window.print();
+  const handleDownloadPdf = () => {
+    const input = document.getElementById('resume-content');
+    if (input) {
+      // Temporarily remove the download button from the capture
+      const downloadButton = document.getElementById('download-button');
+      if (downloadButton) {
+        downloadButton.style.display = 'none';
+      }
+
+      html2canvas(input, {
+        scale: 2, // Higher scale for better quality
+        useCORS: true, 
+        onclone: (document) => {
+          // This runs in the cloned document before canvas is created
+          const printArea = document.querySelector('.printable-area');
+          if (printArea) {
+             (printArea as HTMLElement).style.boxShadow = 'none';
+             (printArea as HTMLElement).style.border = 'none';
+          }
+        }
+      }).then((canvas) => {
+        if (downloadButton) {
+          downloadButton.style.display = 'block'; // Show it again
+        }
+        const imgData = canvas.toDataURL('image/png');
+        // A4 page size: 210mm wide, 297mm tall.
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const canvasWidth = canvas.width;
+        const canvasHeight = canvas.height;
+        const ratio = canvasWidth / canvasHeight;
+        const widthInPdf = pdfWidth;
+        const heightInPdf = widthInPdf / ratio;
+
+        let position = 0;
+        let pageHeight = pdfHeight;
+        let remainingHeight = heightInPdf;
+
+        if (heightInPdf < pdfHeight) {
+            pdf.addImage(imgData, 'PNG', 0, 0, widthInPdf, heightInPdf);
+        } else {
+            while (remainingHeight > 0) {
+                pdf.addImage(imgData, 'PNG', 0, -position, widthInPdf, heightInPdf);
+                remainingHeight -= pageHeight;
+                if (remainingHeight > 0) {
+                    pdf.addPage();
+                }
+                position += pageHeight;
+            }
+        }
+
+        pdf.save('Leonard-Lee-Resume.pdf');
+      }).catch(() => {
+         if (downloadButton) {
+          downloadButton.style.display = 'block'; // Ensure button is visible on error
+        }
+      });
+    }
   };
 
+
   return (
-    <div className="bg-white text-gray-800 p-4 sm:p-12 rounded-lg shadow-2xl printable-area">
+    <div id="resume-content" className="bg-white text-gray-800 p-4 sm:p-12 rounded-lg shadow-2xl printable-area">
       <header className="flex flex-col sm:flex-row items-center gap-8 mb-12 text-center sm:text-left">
         <Image
           src="https://placehold.co/120x120.png"
@@ -298,14 +358,12 @@ export function ResumePage() {
         </section>
       </main>
 
-      <footer className="mt-12 text-center no-print">
-        <Button onClick={handlePrint} size="lg">
+      <footer id="download-button" className="mt-12 text-center no-print">
+        <Button onClick={handleDownloadPdf} size="lg">
           <Download className="mr-2" />
-          Download / Print Resume
+          Download as PDF
         </Button>
       </footer>
     </div>
   );
 }
-
-    
