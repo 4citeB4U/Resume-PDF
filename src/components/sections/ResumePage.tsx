@@ -174,19 +174,21 @@ export function ResumePage() {
       const canvasHeight = canvas.height;
       
       const ratio = canvasWidth / pdfWidth;
-      const canvasHeightInPdf = canvasHeight / ratio;
+      const totalPdfHeight = canvasHeight / ratio;
 
       let position = 0;
-      let heightLeft = canvasHeightInPdf;
-
-      pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, canvasHeightInPdf);
-      heightLeft -= pdfHeight;
+      let pageCount = 1;
+      
+      pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, totalPdfHeight);
+      
+      let heightLeft = totalPdfHeight - pdfHeight;
 
       while (heightLeft > 0) {
-        position -= pdfHeight;
+        position = -(pdfHeight * pageCount);
         pdf.addPage();
-        pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, canvasHeightInPdf);
+        pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, totalPdfHeight);
         heightLeft -= pdfHeight;
+        pageCount++;
       }
       
       pdf.save('Leonard-Lee-Resume.pdf');
