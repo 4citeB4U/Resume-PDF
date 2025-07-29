@@ -199,7 +199,7 @@ export function ResumePage() {
 
 
   return (
-    <div id="resume-content" className="bg-white text-gray-800 p-4 sm:p-12 rounded-lg shadow-2xl printable-area">
+    <div id="resume-content" className="bg-white text-gray-800 p-4 sm:p-12 rounded-lg shadow-2xl printable-area" style={{ fontSize: '90%' }}>
       <header className="flex flex-col sm:flex-row items-center gap-8 mb-12 text-center sm:text-left">
         <Image
           src="https://placehold.co/120x120.png"
@@ -258,7 +258,7 @@ export function ResumePage() {
           </div>
         </section>
         
-        <section className="section">
+        <section className="section experience-section">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Briefcase size={24} /> Experience
           </h2>
@@ -277,7 +277,7 @@ export function ResumePage() {
           </div>
         </section>
 
-        <section className="section">
+        <section className="section skills-section">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Wrench size={24} /> Technical Skills
           </h2>
@@ -290,7 +290,7 @@ export function ResumePage() {
           </ul>
         </section>
 
-        <section className="section">
+        <section className="section certifications-section">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Award size={24} /> Certifications
           </h2>
