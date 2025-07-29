@@ -79,6 +79,7 @@
     color: #000 !important;
     padding: 0;
     margin: 0;
+    font-size: 10pt;
   }
   .printable-area {
     max-width: 100% !important;
@@ -108,10 +109,10 @@
   .section ul {
     list-style-position: inside;
   }
-  .print-break-before {
+  .print-break-experience {
     page-break-before: always;
   }
-  .print-break-before-skills {
+  .print-break-skills {
     page-break-before: always;
   }
   @page {

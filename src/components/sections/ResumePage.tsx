@@ -176,16 +176,17 @@ export function ResumePage() {
       const totalPdfHeight = canvasHeight / ratio;
       
       let position = 0;
+      const pageHeight = pdfHeight;
       let heightLeft = totalPdfHeight;
 
       pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight);
-      heightLeft -= pdfHeight;
+      heightLeft -= pageHeight;
 
       while (heightLeft > 0) {
-        position = -pdfHeight * (totalPdfHeight - heightLeft) / pdfHeight;
+        position = position - pageHeight;
         pdf.addPage();
         pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight);
-        heightLeft -= pdfHeight;
+        heightLeft -= pageHeight;
       }
       
       pdf.save('Leonard-Lee-Resume.pdf');
@@ -258,26 +259,28 @@ export function ResumePage() {
           </div>
         </section>
         
-        <section className="section print-break-before">
-          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-            <Briefcase size={24} /> Experience
-          </h2>
-          <div className="space-y-6 mt-6">
-            {experiences.map((exp, idx) => (
-              <div key={idx} className="experience-card border border-gray-200 p-4 rounded-lg bg-gray-50/50">
-                <h3 className="text-xl font-semibold text-gray-900">{exp.role}</h3>
-                <p className="text-md text-gray-600 mb-2">{exp.company}</p>
-                <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
-                    {exp.items.map((item, itemIdx) => (
-                        <li key={itemIdx}>{item}</li>
-                    ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
+        <div className="print-break-experience">
+          <section className="section">
+            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+              <Briefcase size={24} /> Experience
+            </h2>
+            <div className="space-y-6 mt-6">
+              {experiences.map((exp, idx) => (
+                <div key={idx} className="experience-card border border-gray-200 p-4 rounded-lg bg-gray-50/50">
+                  <h3 className="text-xl font-semibold text-gray-900">{exp.role}</h3>
+                  <p className="text-md text-gray-600 mb-2">{exp.company}</p>
+                  <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
+                      {exp.items.map((item, itemIdx) => (
+                          <li key={itemIdx}>{item}</li>
+                      ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
 
-        <div className="print-break-before-skills">
+        <div className="print-break-skills">
           <section className="section">
             <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
               <Wrench size={24} /> Technical Skills
