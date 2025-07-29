@@ -24,7 +24,7 @@ const professionalSummary =
   'Self-taught developer, builder, and business owner with 15+ years of experience in logistics, operations, and tech innovation. Creator of dozens of full-stack projects across voice AI, logistics forms, business portfolios, CRM platforms, and community tools. Combines hands-on blue-collar experience with advanced AI and automation development. Comfortable on the road, in the field, or writing code in the terminal.';
 
 const experiences = [
-    {
+  {
     role: 'Founder / Full-Stack Developer',
     company: 'RapidWebDevelop LLC / Agent Lee – Milwaukee, WI (2022 – Present)',
     items: [
@@ -152,34 +152,37 @@ export function ResumePage() {
 
     try {
       const canvas = await html2canvas(content, {
-          scale: 2, 
-          useCORS: true,
-          logging: true,
+        scale: 2, 
+        useCORS: true,
+        logging: true,
+        windowWidth: content.scrollWidth,
+        windowHeight: content.scrollHeight,
       });
-
+      
+      const imgData = canvas.toDataURL('image/png', 1.0);
       const pdf = new jsPDF({
-        orientation: 'p',
-        unit: 'px',
-        format: 'a4',
+        orientation: 'portrait',
+        unit: 'pt',
+        format: 'letter',
       });
       
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       
-      const imgData = canvas.toDataURL('image/png');
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = imgWidth / pdfWidth;
-      const totalPdfHeight = imgHeight / ratio;
-
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+      
+      const ratio = canvasWidth / pdfWidth;
+      const totalPdfHeight = canvasHeight / ratio;
+      
       let position = 0;
+      let heightLeft = totalPdfHeight;
 
       pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight);
-
-      let heightLeft = totalPdfHeight - pdfHeight;
+      heightLeft -= pdfHeight;
 
       while (heightLeft > 0) {
-        position = heightLeft - totalPdfHeight;
+        position = -pdfHeight * (totalPdfHeight - heightLeft) / pdfHeight;
         pdf.addPage();
         pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight);
         heightLeft -= pdfHeight;
@@ -254,7 +257,7 @@ export function ResumePage() {
             ))}
           </div>
         </section>
-
+        
         <section className="section print-break-before">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Briefcase size={24} /> Experience
@@ -274,66 +277,68 @@ export function ResumePage() {
           </div>
         </section>
 
-        <section className="section print-break-before-skills">
-          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-            <Wrench size={24} /> Technical Skills
-          </h2>
-          <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
-            {Object.entries(skills).map(([category, skillList]) => (
-              <li key={category}>
-                <strong className="font-semibold text-gray-800">{category}:</strong> {skillList.join(', ')}
-              </li>
-            ))}
-          </ul>
-        </section>
+        <div className="print-break-before-skills">
+          <section className="section">
+            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+              <Wrench size={24} /> Technical Skills
+            </h2>
+            <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
+              {Object.entries(skills).map(([category, skillList]) => (
+                <li key={category}>
+                  <strong className="font-semibold text-gray-800">{category}:</strong> {skillList.join(', ')}
+                </li>
+              ))}
+            </ul>
+          </section>
 
-         <section className="section print-break-before-certifications">
-          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-            <Award size={24} /> Certifications
-          </h2>
-          <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
-            {certifications.map((item, idx) => (
-              <li key={idx} className="mb-1">{item}</li>
-            ))}
-          </ul>
-        </section>
+          <section className="section">
+            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+              <Award size={24} /> Certifications
+            </h2>
+            <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
+              {certifications.map((item, idx) => (
+                <li key={idx} className="mb-1">{item}</li>
+              ))}
+            </ul>
+          </section>
 
-        <section className="section">
-          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-            <Star size={24} /> Awards & Recognition
-          </h2>
-          <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
-            {awards.map((item, idx) => (
-              <li key={idx} className="mb-1">{item}</li>
-            ))}
-          </ul>
-        </section>
+          <section className="section">
+            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+              <Star size={24} /> Awards & Recognition
+            </h2>
+            <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
+              {awards.map((item, idx) => (
+                <li key={idx} className="mb-1">{item}</li>
+              ))}
+            </ul>
+          </section>
 
-        <section className="section">
-          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-            <Users size={24} /> Community Roles
-          </h2>
-          <ul className="list-disc list-inside space-y-2">
-            {communityRoles.map((item, idx) => (
-              <li key={idx}>{item}</li>
-            ))}
-          </ul>
-        </section>
-        
-        <section className="section">
-          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-            <GraduationCap size={24} /> Education
-          </h2>
-          <p className="text-lg">
-            <strong className="text-gray-900">{education.degree}</strong>
-            <br />
-            <span className="text-gray-600">
-              {education.college} | {education.details}
-            </span>
-             <br />
-            <em className="text-gray-500 text-sm">{education.focus}</em>
-          </p>
-        </section>
+          <section className="section">
+            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+              <Users size={24} /> Community Roles
+            </h2>
+            <ul className="list-disc list-inside space-y-2">
+              {communityRoles.map((item, idx) => (
+                <li key={idx}>{item}</li>
+              ))}
+            </ul>
+          </section>
+          
+          <section className="section">
+            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+              <GraduationCap size={24} /> Education
+            </h2>
+            <p className="text-lg">
+              <strong className="text-gray-900">{education.degree}</strong>
+              <br />
+              <span className="text-gray-600">
+                {education.college} | {education.details}
+              </span>
+              <br />
+              <em className="text-gray-500 text-sm">{education.focus}</em>
+            </p>
+          </section>
+        </div>
       </main>
 
       <footer id="download-button" className="mt-12 text-center no-print">
