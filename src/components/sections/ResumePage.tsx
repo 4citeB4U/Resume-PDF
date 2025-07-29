@@ -24,7 +24,7 @@ const professionalSummary =
   'Self-taught developer, builder, and business owner with 15+ years of experience in logistics, operations, and tech innovation. Creator of dozens of full-stack projects across voice AI, logistics forms, business portfolios, CRM platforms, and community tools. Combines hands-on blue-collar experience with advanced AI and automation development. Comfortable on the road, in the field, or writing code in the terminal.';
 
 const experiences = [
-  {
+    {
     role: 'Founder / Full-Stack Developer',
     company: 'RapidWebDevelop LLC / Agent Lee – Milwaukee, WI (2022 – Present)',
     items: [
@@ -244,7 +244,7 @@ export function ResumePage() {
           </p>
         </section>
 
-        <section className="section mb-5">
+        <section className="section mb-10">
            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <HardHat size={24} /> Projects
           </h2>
@@ -262,12 +262,12 @@ export function ResumePage() {
         </section>
 
         <section className="section print-break-before-experience">
-          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 pb-2 mb-4 mt-6">
             <Briefcase size={24} /> Experience
           </h2>
           <div className="space-y-6">
             {experiences.map((exp, idx) => (
-              <div key={idx} className="experience-card">
+              <div key={idx} className="experience-card border-t-2 border-teal-100 pt-4">
                 <h3 className="text-lg font-semibold text-gray-900">{exp.role}</h3>
                 <p className="text-md text-gray-600 mb-2">{exp.company}</p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
@@ -293,7 +293,7 @@ export function ResumePage() {
           </ul>
         </section>
 
-         <section className="section">
+         <section className="section print-break-before-certifications">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Award size={24} /> Certifications
           </h2>
