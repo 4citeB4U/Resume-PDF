@@ -177,19 +177,16 @@ export function ResumePage() {
       const canvasHeightInPdf = canvasHeight / ratio;
 
       let position = 0;
-      let page = 1;
-
-      pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, canvasHeightInPdf);
-
       let heightLeft = canvasHeightInPdf;
 
-      // This is a rough estimation of page breaks. For more precise control, 
-      // you might need a more sophisticated library or approach.
-      while (heightLeft > pdfHeight) {
-          heightLeft -= pdfHeight;
-          position -= pdfHeight;
-          pdf.addPage();
-          pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, canvasHeightInPdf);
+      pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, canvasHeightInPdf);
+      heightLeft -= pdfHeight;
+
+      while (heightLeft > 0) {
+        position -= pdfHeight;
+        pdf.addPage();
+        pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, canvasHeightInPdf);
+        heightLeft -= pdfHeight;
       }
       
       pdf.save('Leonard-Lee-Resume.pdf');
@@ -281,7 +278,7 @@ export function ResumePage() {
           </div>
         </section>
 
-        <section className="section">
+        <section className="section print-break-before">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Wrench size={24} /> Technical Skills
           </h2>
@@ -294,7 +291,7 @@ export function ResumePage() {
           </ul>
         </section>
 
-         <section className="section print-break-before">
+         <section className="section">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Award size={24} /> Certifications
           </h2>
