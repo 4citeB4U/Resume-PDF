@@ -12,107 +12,97 @@ import {
   GraduationCap,
   Wrench,
   User,
-  HeartHandshake,
-  Sprout,
   Star,
+  Users,
 } from 'lucide-react';
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
 
 const professionalSummary =
-  'Visionary technologist and infrastructure leader with 20+ years spanning software, logistics, city operations, and AI development. Creator of the LEEWAY™ framework and Agent Lee, a voice-powered AI assistant. Adept in React, Python, Docker, heavy equipment ops, and real-world logistics architecture.';
-
-const projects = [
-  {
-    title: 'LEEWAY Standards Docs',
-    description: 'CDL & Logistics LMS documentation portal',
-    url: 'https://4citeb4u.github.io/LEEWAYSTANDARDSdocs/',
-  },
-  {
-    title: 'Always Trucking & Loading LMS',
-    description: 'Full dispatch and CDL training portal',
-    url: 'https://alwaystruckingandloading.com',
-  },
-  {
-    title: 'Auto Tire Shop',
-    description: 'Auto service shop interface',
-    url: 'https://4citeb4u.github.io/Auto-Tireshop/',
-  },
-  {
-    title: 'Investor Pitch',
-    description: 'AI-narrated investor pitch for RapidWebDevelop',
-    url: 'https://4citeb4u.github.io/RapidWebDevelopLLCInvestorPitchDeck/',
-  },
-  {
-    title: 'Leola’s Library',
-    description: 'Book reader and inventory platform',
-    url: 'https://4citeb4u.github.io/leolasliabrary/',
-  },
-  {
-    title: 'The Waterhole Project',
-    description: 'Community engagement and resource directory',
-    url: 'https://4citeb4u.github.io/Thewaterholeprojectt/',
-  },
-];
+  'Self-taught developer, builder, and business owner with 15+ years of experience in logistics, operations, and tech innovation. Creator of dozens of full-stack projects across voice AI, logistics forms, business portfolios, CRM platforms, and community tools. Combines hands-on blue-collar experience with advanced AI and automation development. Comfortable on the road, in the field, or writing code in the terminal.';
 
 const experiences = [
   {
-    role: 'RapidWebDevelop LLC – Founder / Full Stack Developer',
-    description:
-      'Developed 30+ advanced web and AI applications. Creator of Agent Lee, voice tools, CRM and LMS platforms.',
+    role: 'Founder / Full-Stack Developer',
+    company: 'RapidWebDevelop LLC / Agent Lee – Milwaukee, WI (2022 – Present)',
+    items: [
+      'Developed 30+ repositories including:',
+      'AgentLee3 / AgentLee2 / AgentX23: Modular AI voice assistant (LiveKit, Gemini, Whisper)',
+      'LEECRM: JavaScript-based CRM for small businesses',
+      'LEEWAYSTANDARDSdocs: HTML-based LMS for trucking/logistics',
+      'TruckForms / contractrwd / AlwaysFormTheBest: HTML forms for contracts & inspections',
+      'LeonardsBusinessCard / damionalwaystruckingcard / StatusCPRTraining: Digital business cards',
+      'TheMomentum / TheInfluencer / TheBrand: Branding sites',
+      'leolasliabrary / library-app: Book inventory and reading apps',
+      'DirectHealthCare2U: Private shell-based CRM system',
+      'Built Agent Lee AI System using React, FastAPI, Docker',
+      'Designed gamified front-end LMS platforms',
+      'Forked and contributed to GPT-engineer, BitNet, Whisper',
+    ],
   },
   {
-    role: 'City of Milwaukee – Equipment & Infrastructure Technician',
-    description:
-      'Worked on bridges, building restoration, concrete work, stairwells, electrical, plumbing and streetcar maintenance (The Hop).',
+    role: 'Owner / Fleet Manager',
+    company: 'Carriers Logistics LLC – Milwaukee, WI (2008 – Present)',
+    items: [
+      'Created logistics/delivery service',
+      'Built internal tracking tools',
+      'Organized donation drives',
+    ],
   },
   {
-    role: 'Nevels Joe Landscaping – Project Manager',
-    description:
-      'Led landscaping projects on Milwaukee lakefront including tree layouts, sculpture park, museum grounds, and memorial paths.',
+    role: 'Night Driver Supervisor',
+    company: 'Crothall Laundry Services – Oak Creek, WI (2010 – 2014)',
+    items: ['Managed industrial delivery routes', 'Oversaw fleet maintenance'],
   },
   {
-    role: 'Carriers Logistics LLC – Owner / Fleet Manager',
-    description:
-      'Managed junk removal and community services; trained youth and returning citizens in logistics.',
+    role: 'Senior Area Manager',
+    company: 'International Profit Associates – Buffalo Grove, IL (2004 – 2007)',
+    items: ['Led B2B business dev & training'],
+  },
+  {
+    role: 'Landscape Crew Manager',
+    company: 'Nevels Joe Landscape Co. – Grafton, WI (2001 – 2004)',
+    items: ['Managed team schedules and design'],
   },
 ];
 
 const skills = {
-  Programming: ['Python', 'JavaScript', 'TypeScript', 'HTML/CSS', 'React'],
-  'Backend & AI': [
-    'FastAPI',
-    'Node.js',
-    'Gemini',
-    'Whisper',
-    'LLaMA',
-    'Docker',
-  ],
-  'Dev Tools': ['GitHub', 'VS Code', 'EmailJS', 'PowerShell'],
-  Trades: ['Millwright', 'CDL', 'Electrical', 'Plumbing', 'Carpentry'],
+  Frontend: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React'],
+  Backend: ['Python', 'FastAPI', 'Node.js', 'Docker', 'Shell'],
+  'AI & Voice': ['Gemini 2.5', 'Whisper', 'LiveKit', 'GPT-engineer', 'LLaMA'],
+  Tools: ['GitHub', 'Trello', 'Peachtree', 'EmailJS', 'Slack', 'Microsoft Office'],
 };
 
-const awardsAndCertifications = [
-  'Fleet Maintenance Commendation – City of Milwaukee',
-  'TWIC Card – Federal Credentialing',
-  'Streetcar Operator Recognition – The Hop, Milwaukee',
-  'Public Works Safety Award',
-  'FEMA IS-100.C Certified',
-  'DOT/TSI Safety Training',
-  'CPR/AED Certified',
-  'OSHA 10 Hour Certification',
-  'Youth Mentorship Leader Award',
+const certifications = [
+  'Class A CDL (H, N, P, T Endorsements)',
+  'OSHA 10 Certified',
+  'CPMM (Certified Property Maintenance Manager)',
+  'FEMA IS-100.C',
+  'DOT/TSI Compliance Training (SMS Awareness, Distracted Driving, Sleep Apnea, Rail Nomenclature)',
 ];
+
+const awards = [
+    'City of Milwaukee Fleet Maintenance Commendation',
+    'Public Works Safety Excellence Award',
+    'Milwaukee Youth Mentorship Leader',
+    'TWIC Certified, DOT/FEMA Compliance',
+];
+
+const communityRoles = [
+    'Youth Mentor: Career guidance for at-risk youth',
+    'Church Volunteer: Food drives, event coordination',
+    'Neighborhood Organizer: Local clean-ups and drives',
+]
 
 const education = {
   degree: 'Associate of Applied Science – Business',
-  college: 'Milwaukee Area Technical College',
-  gpa: 'GPA: 3.8',
+  college: 'Bryant & Stratton College',
+  details: 'Graduated August 2019 | GPA: 3.8',
+  focus: 'Leadership, Project Management, Urban Studies, Logistics & Supply Chain'
 };
 
 export function ResumePage() {
@@ -121,8 +111,8 @@ export function ResumePage() {
   };
 
   return (
-    <div className="bg-white text-gray-800 p-4 sm:p-12 rounded-lg shadow-2xl">
-      <header className="flex flex-col sm:flex-row items-center gap-8 mb-12">
+    <div className="bg-white text-gray-800 p-4 sm:p-12 rounded-lg shadow-2xl printable-area">
+      <header className="flex flex-col sm:flex-row items-center gap-8 mb-12 text-center sm:text-left">
         <Image
           src="https://placehold.co/120x120.png"
           alt="Leonard J. Lee"
@@ -131,10 +121,10 @@ export function ResumePage() {
           className="rounded-full object-cover border-4 border-primary/20 shadow-lg"
           data-ai-hint="professional portrait man"
         />
-        <div className="text-center sm:text-left">
+        <div className="w-full">
           <h1 className="text-5xl font-headline">Leonard J. Lee</h1>
           <p className="text-xl text-primary font-semibold mt-1">
-            Founder, RapidWebDevelop LLC | Creator of Agent Lee
+            Milwaukee, WI
           </p>
           <div className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2 text-sm mt-4 text-gray-600">
             <a
@@ -174,58 +164,33 @@ export function ResumePage() {
           <h2 className="flex items-center gap-3">
             <User size={28} /> Professional Summary
           </h2>
-          <p className="text-gray-700 leading-relaxed text-lg">
+          <p className="text-gray-700 leading-relaxed">
             {professionalSummary}
           </p>
         </section>
 
         <section className="section">
           <h2 className="flex items-center gap-3">
-            <Star size={28} /> Projects
+            <Briefcase size={28} /> Experience
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project, idx) => (
-              <Card
-                key={idx}
-                className="project-card bg-gray-50 hover:shadow-lg transition-shadow duration-300"
-              >
-                <CardHeader>
-                  <CardTitle>{project.title}</CardTitle>
-                  <CardDescription>{project.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary font-semibold hover:underline"
-                  >
-                    Visit Site &rarr;
-                  </a>
-                </CardContent>
-              </Card>
+          <div className="space-y-6">
+            {experiences.map((exp, idx) => (
+              <div key={idx}>
+                <h3 className="text-lg font-semibold text-gray-900">{exp.role}</h3>
+                <p className="text-md text-gray-600 mb-2">{exp.company}</p>
+                <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
+                    {exp.items.map((item, itemIdx) => (
+                        <li key={itemIdx}>{item}</li>
+                    ))}
+                </ul>
+              </div>
             ))}
           </div>
         </section>
 
         <section className="section">
           <h2 className="flex items-center gap-3">
-            <Briefcase size={28} /> Experience
-          </h2>
-          <ul>
-            {experiences.map((exp, idx) => (
-              <li key={idx} className="mb-2">
-                <strong className="text-gray-900">{exp.role}</strong>
-                <br />
-                <span className="text-gray-600">{exp.description}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="section">
-          <h2 className="flex items-center gap-3">
-            <Wrench size={28} /> Skills
+            <Wrench size={28} /> Technical Skills
           </h2>
           <ul>
             {Object.entries(skills).map(([category, skillList]) => (
@@ -236,17 +201,39 @@ export function ResumePage() {
           </ul>
         </section>
 
-        <section className="section">
+         <section className="section">
           <h2 className="flex items-center gap-3">
-            <Award size={28} /> Awards & Certifications
+            <Award size={28} /> Certifications
           </h2>
           <ul className="columns-1 md:columns-2">
-            {awardsAndCertifications.map((item, idx) => (
+            {certifications.map((item, idx) => (
               <li key={idx}>{item}</li>
             ))}
           </ul>
         </section>
 
+        <section className="section">
+          <h2 className="flex items-center gap-3">
+            <Star size={28} /> Awards & Recognition
+          </h2>
+          <ul className="columns-1 md:columns-2">
+            {awards.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="section">
+          <h2 className="flex items-center gap-3">
+            <Users size={28} /> Community Roles
+          </h2>
+          <ul>
+            {communityRoles.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        </section>
+        
         <section className="section">
           <h2 className="flex items-center gap-3">
             <GraduationCap size={28} /> Education
@@ -255,8 +242,10 @@ export function ResumePage() {
             <strong className="text-gray-900">{education.degree}</strong>
             <br />
             <span className="text-gray-600">
-              {education.college} – {education.gpa}
+              {education.college} | {education.details}
             </span>
+             <br />
+            <em className="text-gray-500 text-sm">{education.focus}</em>
           </p>
         </section>
       </main>
