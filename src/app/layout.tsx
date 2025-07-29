@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
-  title: 'LeeWay Portfolio: The Netflix Theater of Innovation',
-  description: 'A dynamic showcase of experience, skill, and creative vision by Lee.',
+  title: 'Leonard J. Lee | Resume + Portfolio',
+  description: 'The resume and portfolio for Leonard J. Lee, a versatile developer, builder, and business owner.',
 };
 
 export default function RootLayout({
@@ -17,10 +17,12 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased">
-        {children}
+      <body className="antialiased">
+        <main className="max-w-4xl mx-auto p-4 sm:p-10">
+          {children}
+        </main>
         <Toaster />
       </body>
     </html>
