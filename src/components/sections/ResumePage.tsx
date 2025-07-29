@@ -159,7 +159,7 @@ export function ResumePage() {
         windowHeight: content.scrollHeight,
       });
       
-      const imgData = canvas.toDataURL('image/png', 1.0);
+      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'pt',
@@ -176,17 +176,16 @@ export function ResumePage() {
       const totalPdfHeight = canvasHeight / ratio;
       
       let position = 0;
-      const pageHeight = pdfHeight;
       let heightLeft = totalPdfHeight;
 
       pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight);
-      heightLeft -= pageHeight;
+      heightLeft -= pdfHeight;
 
       while (heightLeft > 0) {
-        position = position - pageHeight;
+        position = position - pdfHeight;
         pdf.addPage();
         pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight);
-        heightLeft -= pageHeight;
+        heightLeft -= pdfHeight;
       }
       
       pdf.save('Leonard-Lee-Resume.pdf');
@@ -259,89 +258,85 @@ export function ResumePage() {
           </div>
         </section>
         
-        <div className="print-break-experience">
-          <section className="section">
-            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-              <Briefcase size={24} /> Experience
-            </h2>
-            <div className="space-y-6 mt-6">
-              {experiences.map((exp, idx) => (
-                <div key={idx} className="experience-card border border-gray-200 p-4 rounded-lg bg-gray-50/50">
-                  <h3 className="text-xl font-semibold text-gray-900">{exp.role}</h3>
-                  <p className="text-md text-gray-600 mb-2">{exp.company}</p>
-                  <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
-                      {exp.items.map((item, itemIdx) => (
-                          <li key={itemIdx}>{item}</li>
-                      ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </section>
-        </div>
+        <section className="section">
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <Briefcase size={24} /> Experience
+          </h2>
+          <div className="space-y-6 mt-6">
+            {experiences.map((exp, idx) => (
+              <div key={idx} className="experience-card border border-gray-200 p-4 rounded-lg bg-gray-50/50">
+                <h3 className="text-xl font-semibold text-gray-900">{exp.role}</h3>
+                <p className="text-md text-gray-600 mb-2">{exp.company}</p>
+                <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
+                    {exp.items.map((item, itemIdx) => (
+                        <li key={itemIdx}>{item}</li>
+                    ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
 
-        <div className="print-break-skills">
-          <section className="section">
-            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-              <Wrench size={24} /> Technical Skills
-            </h2>
-            <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
-              {Object.entries(skills).map(([category, skillList]) => (
-                <li key={category}>
-                  <strong className="font-semibold text-gray-800">{category}:</strong> {skillList.join(', ')}
-                </li>
-              ))}
-            </ul>
-          </section>
+        <section className="section">
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <Wrench size={24} /> Technical Skills
+          </h2>
+          <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
+            {Object.entries(skills).map(([category, skillList]) => (
+              <li key={category}>
+                <strong className="font-semibold text-gray-800">{category}:</strong> {skillList.join(', ')}
+              </li>
+            ))}
+          </ul>
+        </section>
 
-          <section className="section">
-            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-              <Award size={24} /> Certifications
-            </h2>
-            <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
-              {certifications.map((item, idx) => (
-                <li key={idx} className="mb-1">{item}</li>
-              ))}
-            </ul>
-          </section>
+        <section className="section">
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <Award size={24} /> Certifications
+          </h2>
+          <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
+            {certifications.map((item, idx) => (
+              <li key={idx} className="mb-1">{item}</li>
+            ))}
+          </ul>
+        </section>
 
-          <section className="section">
-            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-              <Star size={24} /> Awards & Recognition
-            </h2>
-            <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
-              {awards.map((item, idx) => (
-                <li key={idx} className="mb-1">{item}</li>
-              ))}
-            </ul>
-          </section>
+        <section className="section">
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <Star size={24} /> Awards & Recognition
+          </h2>
+          <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
+            {awards.map((item, idx) => (
+              <li key={idx} className="mb-1">{item}</li>
+            ))}
+          </ul>
+        </section>
 
-          <section className="section">
-            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-              <Users size={24} /> Community Roles
-            </h2>
-            <ul className="list-disc list-inside space-y-2">
-              {communityRoles.map((item, idx) => (
-                <li key={idx}>{item}</li>
-              ))}
-            </ul>
-          </section>
-          
-          <section className="section">
-            <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
-              <GraduationCap size={24} /> Education
-            </h2>
-            <p className="text-lg">
-              <strong className="text-gray-900">{education.degree}</strong>
-              <br />
-              <span className="text-gray-600">
-                {education.college} | {education.details}
-              </span>
-              <br />
-              <em className="text-gray-500 text-sm">{education.focus}</em>
-            </p>
-          </section>
-        </div>
+        <section className="section">
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <Users size={24} /> Community Roles
+          </h2>
+          <ul className="list-disc list-inside space-y-2">
+            {communityRoles.map((item, idx) => (
+              <li key={idx}>{item}</li>
+            ))}
+          </ul>
+        </section>
+        
+        <section className="section">
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <GraduationCap size={24} /> Education
+          </h2>
+          <p className="text-lg">
+            <strong className="text-gray-900">{education.degree}</strong>
+            <br />
+            <span className="text-gray-600">
+              {education.college} | {education.details}
+            </span>
+            <br />
+            <em className="text-gray-500 text-sm">{education.focus}</em>
+          </p>
+        </section>
       </main>
 
       <footer id="download-button" className="mt-12 text-center no-print">
