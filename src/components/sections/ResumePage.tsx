@@ -21,51 +21,59 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 const professionalSummary =
-  'Self-taught developer, builder, and business owner with 15+ years of experience in logistics, operations, and tech innovation. Creator of dozens of full-stack projects across voice AI, logistics forms, business portfolios, CRM platforms, and community tools. Combines hands-on blue-collar experience with advanced AI and automation development. Comfortable on the road, in the field, or writing code in the terminal.';
+  'Visionary technologist and infrastructure leader with 20+ years spanning software, logistics, city operations, and AI development. Creator of the LEEWAY™ framework and Agent Lee, a voice-powered AI assistant. Adept in React, Python, Docker, heavy equipment ops, and real-world logistics architecture.';
 
 const experiences = [
   {
     role: 'Founder / Full-Stack Developer',
     company: 'RapidWebDevelop LLC / Agent Lee – Milwaukee, WI (2022 – Present)',
     items: [
-      'Developed 30+ repositories including: AgentLee3 (Modular AI voice assistant), LEECRM (JS-based CRM), LEEWAYSTANDARDSdocs (HTML-based LMS), and various business tools.',
-      'Built Agent Lee AI System using React, FastAPI, & Docker.',
-      'Designed gamified front-end LMS platforms and forked/contributed to GPT-engineer, BitNet, and Whisper.'
-    ],
-  },
-  {
-    role: 'Owner / Fleet Manager',
-    company: 'Carriers Logistics LLC – Milwaukee, WI (2008 – Present)',
-    items: [
-      'Created and managed a logistics/delivery service from the ground up.',
-      'Built internal tracking and management tools to optimize operations.',
-      'Organized and led community donation drives.'
+      'Developed 30+ advanced web and AI applications. Creator of Agent Lee, voice tools, CRM and LMS platforms.'
     ],
   },
   {
     role: 'Night Driver Supervisor',
     company: 'Crothall Laundry Services – Oak Creek, WI (2010 – 2014)',
     items: [
-      'Managed industrial delivery routes and logistics for a large-scale laundry service.',
-      'Oversaw fleet maintenance, scheduling, and driver performance.'
+        'Managed industrial delivery routes',
+        'Oversaw fleet maintenance'
     ],
   },
-    {
+  {
     role: 'Senior Area Manager',
     company: 'International Profit Associates – Buffalo Grove, IL (2004 – 2007)',
     items: [
-      'Led B2B business development, sales, and staff training initiatives.',
-      'Managed client accounts and drove regional growth strategies.'
+      'Led B2B business dev & training',
     ],
   },
   {
     role: 'Landscape Crew Manager',
     company: 'Nevels Joe Landscape Co. – Grafton, WI (2001 – 2004)',
     items: [
-        'Managed team schedules, project execution, and landscape design implementations.',
-        'Contributed to major projects on the Milwaukee lakefront.'
+        'Managed team schedules and design',
     ],
   },
+  {
+    role: 'Equipment & Infrastructure Technician',
+    company: 'City of Milwaukee',
+    items: [
+        'Worked on bridges, building restoration, concrete work, stairwells, electrical, plumbing and streetcar maintenance (The Hop).'
+    ]
+  },
+  {
+    role: 'Project Manager',
+    company: 'Nevels Joe Landscaping',
+    items: [
+      'Led landscaping projects on Milwaukee lakefront including tree layouts, sculpture park, museum grounds, and memorial paths.'
+    ]
+  },
+  {
+    role: 'Owner / Fleet Manager',
+    company: 'Carriers Logistics LLC',
+    items: [
+        'Managed junk removal and community services; trained youth and returning citizens in logistics.'
+    ]
+  }
 ];
 
 const projects = [
@@ -102,10 +110,10 @@ const projects = [
 ];
 
 const skills = {
-  'Frontend': ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React'],
-  'Backend': ['Python', 'FastAPI', 'Node.js', 'Docker', 'Shell'],
-  'AI & Voice': ['Gemini 2.5', 'Whisper', 'LiveKit', 'GPT-engineer', 'LLaMA'],
-  'Tools': ['GitHub', 'Trello', 'Peachtree', 'EmailJS', 'Slack', 'Microsoft Office'],
+  'Programming': ['Python', 'JavaScript', 'TypeScript', 'HTML/CSS', 'React'],
+  'Backend & AI': ['FastAPI', 'Node.js', 'Gemini', 'Whisper', 'LLaMA', 'Docker'],
+  'Dev Tools': ['GitHub', 'VS Code', 'EmailJS', 'PowerShell'],
+  'Trades': ['Millwright', 'CDL', 'Electrical', 'Plumbing', 'Carpentry'],
 };
 
 const certifications = [
@@ -113,16 +121,16 @@ const certifications = [
   'OSHA 10 Certified',
   'CPMM (Certified Property Maintenance Manager)',
   'FEMA IS-100.C',
-  'DOT/TSI Compliance Training (SMS Awareness, Distracted Driving, Sleep Apnea, Rail Nomenclature)',
-  'TWIC Certified',
+  'DOT/TSI Compliance Training',
   'CPR/AED Certified',
+  'TWIC Card – Federal Credentialing'
 ];
 
 const awards = [
-    'City of Milwaukee Fleet Maintenance Commendation',
-    'Public Works Safety Excellence Award',
-    'Milwaukee Youth Mentorship Leader',
-    'Streetcar Operator Recognition - The Hop',
+    'Fleet Maintenance Commendation – City of Milwaukee',
+    'Streetcar Operator Recognition – The Hop, Milwaukee',
+    'Public Works Safety Award',
+    'Youth Mentorship Leader Award',
 ];
 
 const communityRoles = [
@@ -134,68 +142,70 @@ const communityRoles = [
 const education = {
   degree: 'Associate of Applied Science – Business',
   college: 'Bryant & Stratton College',
-  details: 'Graduated August 2019 | GPA: 3.8',
-  focus: 'Leadership, Project Management, Urban Studies, Logistics & Supply Chain'
+  details: 'GPA: 3.8',
+  focus: ''
 };
 
-export function ResumePage() {
-  const handleDownloadPdf = () => {
-    const input = document.getElementById('resume-content');
-    if (input) {
-      // Temporarily remove the download button from the capture
-      const downloadButton = document.getElementById('download-button');
-      if (downloadButton) {
-        downloadButton.style.display = 'none';
-      }
 
-      html2canvas(input, {
-        scale: 2, // Higher scale for better quality
-        useCORS: true, 
+export function ResumePage() {
+    const handleDownloadPdf = () => {
+    const content = document.getElementById('resume-content');
+    const downloadButton = document.getElementById('download-button');
+
+    if (content) {
+      if (downloadButton) downloadButton.style.display = 'none';
+
+      html2canvas(content, {
+        scale: 2, // Improves quality
+        useCORS: true,
+        logging: false,
         onclone: (document) => {
-          // This runs in the cloned document before canvas is created
-          const printArea = document.querySelector('.printable-area');
-          if (printArea) {
-             (printArea as HTMLElement).style.boxShadow = 'none';
-             (printArea as HTMLElement).style.border = 'none';
-          }
+            const clonedContent = document.getElementById('resume-content');
+            if (clonedContent) {
+                // Ensure no shadows or borders on the cloned element for PDF
+                clonedContent.style.boxShadow = 'none';
+                clonedContent.style.border = 'none';
+                clonedContent.style.margin = '0';
+                clonedContent.style.padding = '0';
+            }
         }
       }).then((canvas) => {
-        if (downloadButton) {
-          downloadButton.style.display = 'block'; // Show it again
-        }
+        
         const imgData = canvas.toDataURL('image/png');
-        // A4 page size: 210mm wide, 297mm tall.
-        const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size in mm
+        
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = pdf.internal.pageSize.getHeight();
+        
         const canvasWidth = canvas.width;
         const canvasHeight = canvas.height;
+        
+        // Calculate the aspect ratio
         const ratio = canvasWidth / canvasHeight;
-        const widthInPdf = pdfWidth;
-        const heightInPdf = widthInPdf / ratio;
+        const imgHeightInPdf = pdfWidth / ratio;
 
+        let heightLeft = imgHeightInPdf;
         let position = 0;
-        let pageHeight = pdfHeight;
-        let remainingHeight = heightInPdf;
 
-        if (heightInPdf < pdfHeight) {
-            pdf.addImage(imgData, 'PNG', 0, 0, widthInPdf, heightInPdf);
-        } else {
-            while (remainingHeight > 0) {
-                pdf.addImage(imgData, 'PNG', 0, -position, widthInPdf, heightInPdf);
-                remainingHeight -= pageHeight;
-                if (remainingHeight > 0) {
-                    pdf.addPage();
-                }
-                position += pageHeight;
-            }
+        // Add the first page
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeightInPdf);
+        heightLeft -= pdfHeight;
+
+        // Add new pages if the content is longer than one page
+        while (heightLeft > 0) {
+          position = -heightLeft;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeightInPdf);
+          heightLeft -= pdfHeight;
         }
 
         pdf.save('Leonard-Lee-Resume.pdf');
-      }).catch(() => {
-         if (downloadButton) {
-          downloadButton.style.display = 'block'; // Ensure button is visible on error
-        }
+
+        if (downloadButton) downloadButton.style.display = 'block';
+
+      }).catch((error) => {
+        console.error("Error generating PDF:", error);
+        if (downloadButton) downloadButton.style.display = 'block';
       });
     }
   };
@@ -209,41 +219,25 @@ export function ResumePage() {
           alt="Leonard J. Lee"
           width={120}
           height={120}
-          className="rounded-full object-cover border-4 border-primary/20 shadow-lg"
+          className="rounded-full object-cover border-4 border-teal-500/30 shadow-lg"
           data-ai-hint="professional portrait man"
         />
         <div className="w-full">
-          <h1 className="text-5xl font-headline">Leonard J. Lee</h1>
-          <p className="text-xl text-primary font-semibold mt-1">
-            Milwaukee, WI
+          <h1 className="text-5xl font-headline text-gray-800">Leonard J. Lee</h1>
+          <p className="text-xl text-teal-600 font-semibold mt-1">
+            Founder, RapidWebDevelop LLC | Creator of Agent Lee
           </p>
           <div className="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2 text-sm mt-4 text-gray-600">
-            <a
-              href="mailto:LeonardLee6@outlook.com"
-              className="flex items-center gap-2 hover:text-primary transition-colors"
-            >
+            <a href="mailto:LeonardLee6@outlook.com" className="flex items-center gap-2 hover:text-teal-600 transition-colors">
               <Mail size={14} /> LeonardLee6@outlook.com
             </a>
-            <a
-              href="tel:+14143038580"
-              className="flex items-center gap-2 hover:text-primary transition-colors"
-            >
+            <a href="tel:+14143038580" className="flex items-center gap-2 hover:text-teal-600 transition-colors">
               <Phone size={14} /> (414) 303-8580
             </a>
-            <a
-              href="https://github.com/4citeB4U"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 hover:text-primary transition-colors"
-            >
+            <a href="https://github.com/4citeB4U" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-teal-600 transition-colors">
               <Github size={14} /> github.com/4citeB4U
             </a>
-            <a
-              href="https://rapidwebdevelop.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 hover:text-primary transition-colors"
-            >
+            <a href="https://rapidwebdevelop.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-teal-600 transition-colors">
               <Globe size={14} /> rapidwebdevelop.com
             </a>
           </div>
@@ -252,8 +246,8 @@ export function ResumePage() {
 
       <main>
         <section className="section">
-          <h2 className="flex items-center gap-3">
-            <User size={28} /> Professional Summary
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <User size={24} /> Professional Summary
           </h2>
           <p className="text-gray-700 leading-relaxed">
             {professionalSummary}
@@ -261,13 +255,13 @@ export function ResumePage() {
         </section>
 
         <section className="section">
-           <h2 className="flex items-center gap-3">
-            <HardHat size={28} /> Projects
+           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <HardHat size={24} /> Projects
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
             {projects.map((project, idx) => (
-               <div key={idx} className="project-card border border-gray-200 p-4 rounded-lg bg-gray-50/50 hover:shadow-md transition-shadow">
-                <h3 className="font-semibold text-primary text-lg">{project.title}</h3>
+               <div key={idx} className="project-card border border-gray-200 p-4 rounded-lg bg-gray-50/50 hover:shadow-md transition-shadow duration-300 ease-in-out">
+                <h3 className="font-semibold text-teal-600 text-lg">{project.title}</h3>
                 <p className="text-gray-600 text-sm mb-2">{project.description}</p>
                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-blue-600 hover:underline">
                   Visit Site &rarr;
@@ -278,12 +272,12 @@ export function ResumePage() {
         </section>
 
         <section className="section">
-          <h2 className="flex items-center gap-3">
-            <Briefcase size={28} /> Experience
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <Briefcase size={24} /> Experience
           </h2>
           <div className="space-y-6">
             {experiences.map((exp, idx) => (
-              <div key={idx}>
+              <div key={idx} className="experience-card">
                 <h3 className="text-lg font-semibold text-gray-900">{exp.role}</h3>
                 <p className="text-md text-gray-600 mb-2">{exp.company}</p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
@@ -297,23 +291,23 @@ export function ResumePage() {
         </section>
 
         <section className="section">
-          <h2 className="flex items-center gap-3">
-            <Wrench size={28} /> Technical Skills
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <Wrench size={24} /> Technical Skills
           </h2>
-          <ul className="columns-1 md:columns-2">
+          <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
             {Object.entries(skills).map(([category, skillList]) => (
               <li key={category}>
-                <strong>{category}:</strong> {skillList.join(', ')}
+                <strong className="font-semibold text-gray-800">{category}:</strong> {skillList.join(', ')}
               </li>
             ))}
           </ul>
         </section>
 
          <section className="section">
-          <h2 className="flex items-center gap-3">
-            <Award size={28} /> Certifications
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <Award size={24} /> Certifications
           </h2>
-          <ul className="columns-1 md:columns-2">
+          <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
             {certifications.map((item, idx) => (
               <li key={idx} className="mb-1">{item}</li>
             ))}
@@ -321,10 +315,10 @@ export function ResumePage() {
         </section>
 
         <section className="section">
-          <h2 className="flex items-center gap-3">
-            <Star size={28} /> Awards & Recognition
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <Star size={24} /> Awards & Recognition
           </h2>
-          <ul className="columns-1 md:columns-2">
+          <ul className="columns-1 md:columns-2 list-disc list-inside space-y-2">
             {awards.map((item, idx) => (
               <li key={idx} className="mb-1">{item}</li>
             ))}
@@ -332,10 +326,10 @@ export function ResumePage() {
         </section>
 
         <section className="section">
-          <h2 className="flex items-center gap-3">
-            <Users size={28} /> Community Roles
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <Users size={24} /> Community Roles
           </h2>
-          <ul>
+          <ul className="list-disc list-inside space-y-2">
             {communityRoles.map((item, idx) => (
               <li key={idx}>{item}</li>
             ))}
@@ -343,8 +337,8 @@ export function ResumePage() {
         </section>
         
         <section className="section">
-          <h2 className="flex items-center gap-3">
-            <GraduationCap size={28} /> Education
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
+            <GraduationCap size={24} /> Education
           </h2>
           <p className="text-lg">
             <strong className="text-gray-900">{education.degree}</strong>
@@ -359,11 +353,12 @@ export function ResumePage() {
       </main>
 
       <footer id="download-button" className="mt-12 text-center no-print">
-        <Button onClick={handleDownloadPdf} size="lg">
-          <Download className="mr-2" />
-          Download as PDF
+         <Button onClick={handleDownloadPdf} size="lg" className="bg-teal-600 text-white hover:bg-teal-700">
+            <Download className="mr-2" />
+            Download / Print Resume
         </Button>
       </footer>
     </div>
   );
 }
+
