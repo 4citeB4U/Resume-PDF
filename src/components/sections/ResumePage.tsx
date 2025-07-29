@@ -213,7 +213,7 @@ export function ResumePage() {
 
       <header className="flex flex-col sm:flex-row items-center gap-8 mb-12 text-center sm:text-left pr-24">
         <Image
-          src="/picoflee.jpg"
+          src="./picoflee.jpg"
           alt="Leonard J. Lee"
           width={120}
           height={120}

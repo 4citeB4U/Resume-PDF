@@ -1,0 +1,26 @@
+{
+  "name": "Leonard J. Lee - Resume",
+  "short_name": "Lee Resume",
+  "description": "Professional resume of Leonard J. Lee - Founder of RapidWebDevelop LLC",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0d9488",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./picoflee.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./picoflee.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "en-US"
+}
