@@ -152,47 +152,68 @@ export function ResumePage() {
     if (downloadButton) downloadButton.style.display = 'none';
 
     try {
-      // Use html2canvas to take a "screenshot" of the content
-      const canvas = await html2canvas(content, {
-        scale: 2, // Higher scale for better quality
-        useCORS: true,
-        logging: false,
-        width: content.scrollWidth,
-        height: content.scrollHeight,
-        windowWidth: content.scrollWidth,
-        windowHeight: content.scrollHeight,
-      });
-
       const pdf = new jsPDF({
         orientation: 'p',
-        unit: 'mm',
+        unit: 'px',
         format: 'a4',
       });
-
+      
       const pdfWidth = pdf.internal.pageSize.getWidth();
+      
+      const canvas = await html2canvas(content, {
+        width: pdfWidth, // Set canvas width to match PDF width
+        windowWidth: pdfWidth,
+        scale: 2,
+      });
+
+      const canvasHeight = canvas.height;
       const pdfHeight = pdf.internal.pageSize.getHeight();
       
-      const canvasWidth = canvas.width;
-      const canvasHeight = canvas.height;
-      
-      const ratio = canvasWidth / pdfWidth;
-      const totalPdfHeight = canvasHeight / ratio;
+      // Calculate total height of the content in PDF pixels
+      const totalPdfHeight = (canvasHeight * pdfWidth) / canvas.width;
 
       let position = 0;
-      let pageCount = 1;
+      let pageCount = 0;
 
-      // Add the first page
-      pdf.addImage(canvas, 'PNG', 0, 0, pdfWidth, totalPdfHeight);
-      
-      let heightLeft = totalPdfHeight - pdfHeight;
+      while (position < totalPdfHeight) {
+        // Add a new page for all but the first page
+        if (pageCount > 0) {
+          pdf.addPage();
+        }
+        // Calculate the part of the canvas to add to the current page
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = canvas.width;
+        // Set the height for this slice of the canvas
+        pageCanvas.height = Math.min(canvas.height - (position * (canvas.width / pdfWidth)), pdfHeight * (canvas.width / pdfWidth));
+        
+        const pageCtx = pageCanvas.getContext('2d');
+        if (pageCtx) {
+           pageCtx.drawImage(
+              canvas,
+              0, // sx
+              position * (canvas.width / pdfWidth), // sy (source y)
+              canvas.width, // sWidth
+              pageCanvas.height, // sHeight
+              0, // dx
+              0, // dy
+              canvas.width, // dWidth
+              pageCanvas.height // dHeight
+            );
+          
+            pdf.addImage(
+              pageCanvas.toDataURL('image/png'),
+              'PNG',
+              0, // x
+              0, // y
+              pdfWidth, // width
+              (pageCanvas.height * pdfWidth) / pageCanvas.width // height
+            );
+        }
 
-      // Add subsequent pages if the content is longer than one page
-      while (heightLeft > 0) {
-        position = -(pdfHeight * pageCount);
-        pdf.addPage();
-        pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, totalPdfHeight);
-        heightLeft -= pdfHeight;
+        position += pdfHeight;
         pageCount++;
+        // Break if we've added enough pages
+        if (position >= totalPdfHeight) break;
       }
       
       pdf.save('Leonard-Lee-Resume.pdf');
@@ -266,13 +287,13 @@ export function ResumePage() {
           </div>
         </section>
 
-        <section className="section print-break-before-experience">
-          <h2 className="flex items-center gap-3 text-2xl text-teal-700 pb-2 mb-4 mt-6">
+        <section className="section print-break-before">
+          <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Briefcase size={24} /> Experience
           </h2>
-          <div className="space-y-6">
+          <div className="space-y-6 mt-6">
             {experiences.map((exp, idx) => (
-              <div key={idx} className="experience-card border-t-2 border-teal-100 pt-4">
+              <div key={idx} className="experience-card border border-gray-200 p-4 rounded-lg bg-gray-50/50">
                 <h3 className="text-xl font-semibold text-gray-900">{exp.role}</h3>
                 <p className="text-md text-gray-600 mb-2">{exp.company}</p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">

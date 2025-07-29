@@ -111,6 +111,12 @@
   .print-break-before {
     page-break-before: always;
   }
+  .print-break-before-skills {
+    page-break-before: always;
+  }
+  .print-break-before-certifications {
+    page-break-before: always;
+  }
   @page {
     size: letter;
     margin: 0.75in;
