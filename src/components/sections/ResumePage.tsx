@@ -264,7 +264,7 @@ export function ResumePage() {
           </h2>
           <div className="space-y-4 mt-6">
             {experiences.map((exp, idx) => (
-              <div key={idx} className="experience-card border border-gray-200 p-2 rounded-lg bg-gray-50/50">
+              <div key={idx} className={`experience-card border border-gray-200 p-2 rounded-lg bg-gray-50/50 ${exp.role === 'Landscape Crew Manager' ? 'text-[90%]' : ''}`}>
                 <h3 className="text-xl font-semibold text-gray-900">{exp.role}</h3>
                 <p className="text-md text-gray-600 mb-2">{exp.company}</p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
