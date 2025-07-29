@@ -148,10 +148,15 @@ export function ResumePage() {
       return;
     }
     
-    // Hide the download button for the screenshot
     if (downloadButton) downloadButton.style.display = 'none';
 
     try {
+      const canvas = await html2canvas(content, {
+          scale: 2, 
+          useCORS: true,
+          logging: true,
+      });
+
       const pdf = new jsPDF({
         orientation: 'p',
         unit: 'px',
@@ -159,61 +164,25 @@ export function ResumePage() {
       });
       
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      
-      const canvas = await html2canvas(content, {
-        width: pdfWidth, // Set canvas width to match PDF width
-        windowWidth: pdfWidth,
-        scale: 2,
-      });
-
-      const canvasHeight = canvas.height;
       const pdfHeight = pdf.internal.pageSize.getHeight();
       
-      // Calculate total height of the content in PDF pixels
-      const totalPdfHeight = (canvasHeight * pdfWidth) / canvas.width;
+      const imgData = canvas.toDataURL('image/png');
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      const ratio = imgWidth / pdfWidth;
+      const totalPdfHeight = imgHeight / ratio;
 
       let position = 0;
-      let pageCount = 0;
 
-      while (position < totalPdfHeight) {
-        // Add a new page for all but the first page
-        if (pageCount > 0) {
-          pdf.addPage();
-        }
-        // Calculate the part of the canvas to add to the current page
-        const pageCanvas = document.createElement('canvas');
-        pageCanvas.width = canvas.width;
-        // Set the height for this slice of the canvas
-        pageCanvas.height = Math.min(canvas.height - (position * (canvas.width / pdfWidth)), pdfHeight * (canvas.width / pdfWidth));
-        
-        const pageCtx = pageCanvas.getContext('2d');
-        if (pageCtx) {
-           pageCtx.drawImage(
-              canvas,
-              0, // sx
-              position * (canvas.width / pdfWidth), // sy (source y)
-              canvas.width, // sWidth
-              pageCanvas.height, // sHeight
-              0, // dx
-              0, // dy
-              canvas.width, // dWidth
-              pageCanvas.height // dHeight
-            );
-          
-            pdf.addImage(
-              pageCanvas.toDataURL('image/png'),
-              'PNG',
-              0, // x
-              0, // y
-              pdfWidth, // width
-              (pageCanvas.height * pdfWidth) / pageCanvas.width // height
-            );
-        }
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight);
 
-        position += pdfHeight;
-        pageCount++;
-        // Break if we've added enough pages
-        if (position >= totalPdfHeight) break;
+      let heightLeft = totalPdfHeight - pdfHeight;
+
+      while (heightLeft > 0) {
+        position = heightLeft - totalPdfHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight);
+        heightLeft -= pdfHeight;
       }
       
       pdf.save('Leonard-Lee-Resume.pdf');
@@ -221,7 +190,6 @@ export function ResumePage() {
     } catch (error) {
       console.error("Error generating PDF:", error);
     } finally {
-      // Show the download button again
       if (downloadButton) downloadButton.style.display = 'block';
     }
   };
