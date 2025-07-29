@@ -14,13 +14,9 @@ import {
   User,
   Star,
   Users,
+  Building,
+  HardHat,
 } from 'lucide-react';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
 
 const professionalSummary =
   'Self-taught developer, builder, and business owner with 15+ years of experience in logistics, operations, and tech innovation. Creator of dozens of full-stack projects across voice AI, logistics forms, business portfolios, CRM platforms, and community tools. Combines hands-on blue-collar experience with advanced AI and automation development. Comfortable on the road, in the field, or writing code in the terminal.';
@@ -30,51 +26,84 @@ const experiences = [
     role: 'Founder / Full-Stack Developer',
     company: 'RapidWebDevelop LLC / Agent Lee – Milwaukee, WI (2022 – Present)',
     items: [
-      'Developed 30+ repositories including:',
-      'AgentLee3 / AgentLee2 / AgentX23: Modular AI voice assistant (LiveKit, Gemini, Whisper)',
-      'LEECRM: JavaScript-based CRM for small businesses',
-      'LEEWAYSTANDARDSdocs: HTML-based LMS for trucking/logistics',
-      'TruckForms / contractrwd / AlwaysFormTheBest: HTML forms for contracts & inspections',
-      'LeonardsBusinessCard / damionalwaystruckingcard / StatusCPRTraining: Digital business cards',
-      'TheMomentum / TheInfluencer / TheBrand: Branding sites',
-      'leolasliabrary / library-app: Book inventory and reading apps',
-      'DirectHealthCare2U: Private shell-based CRM system',
-      'Built Agent Lee AI System using React, FastAPI, Docker',
-      'Designed gamified front-end LMS platforms',
-      'Forked and contributed to GPT-engineer, BitNet, Whisper',
+      'Developed 30+ repositories including: AgentLee3 (Modular AI voice assistant), LEECRM (JS-based CRM), LEEWAYSTANDARDSdocs (HTML-based LMS), and various business tools.',
+      'Built Agent Lee AI System using React, FastAPI, & Docker.',
+      'Designed gamified front-end LMS platforms and forked/contributed to GPT-engineer, BitNet, and Whisper.'
     ],
   },
   {
     role: 'Owner / Fleet Manager',
     company: 'Carriers Logistics LLC – Milwaukee, WI (2008 – Present)',
     items: [
-      'Created logistics/delivery service',
-      'Built internal tracking tools',
-      'Organized donation drives',
+      'Created and managed a logistics/delivery service from the ground up.',
+      'Built internal tracking and management tools to optimize operations.',
+      'Organized and led community donation drives.'
     ],
   },
   {
     role: 'Night Driver Supervisor',
     company: 'Crothall Laundry Services – Oak Creek, WI (2010 – 2014)',
-    items: ['Managed industrial delivery routes', 'Oversaw fleet maintenance'],
+    items: [
+      'Managed industrial delivery routes and logistics for a large-scale laundry service.',
+      'Oversaw fleet maintenance, scheduling, and driver performance.'
+    ],
   },
-  {
+    {
     role: 'Senior Area Manager',
     company: 'International Profit Associates – Buffalo Grove, IL (2004 – 2007)',
-    items: ['Led B2B business dev & training'],
+    items: [
+      'Led B2B business development, sales, and staff training initiatives.',
+      'Managed client accounts and drove regional growth strategies.'
+    ],
   },
   {
     role: 'Landscape Crew Manager',
     company: 'Nevels Joe Landscape Co. – Grafton, WI (2001 – 2004)',
-    items: ['Managed team schedules and design'],
+    items: [
+        'Managed team schedules, project execution, and landscape design implementations.',
+        'Contributed to major projects on the Milwaukee lakefront.'
+    ],
   },
 ];
 
+const projects = [
+  {
+    title: 'LEEWAY Standards Docs',
+    description: 'CDL & Logistics LMS documentation portal',
+    link: 'https://4citeb4u.github.io/LEEWAYSTANDARDSdocs/',
+  },
+  {
+    title: 'Always Trucking & Loading LMS',
+    description: 'Full dispatch and CDL training portal',
+    link: 'https://alwaystruckingandloading.com',
+  },
+  {
+    title: 'Auto Tire Shop',
+    description: 'Auto service shop interface',
+    link: 'https://4citeb4u.github.io/Auto-Tireshop/',
+  },
+  {
+    title: 'Investor Pitch',
+    description: 'AI-narrated investor pitch for RapidWebDevelop',
+    link: 'https://4citeb4u.github.io/RapidWebDevelopLLCInvestorPitchDeck/',
+  },
+  {
+    title: 'Leola’s Library',
+    description: 'Book reader and inventory platform',
+    link: 'https://4citeb4u.github.io/leolasliabrary/',
+  },
+  {
+    title: 'The Waterhole Project',
+    description: 'Community engagement and resource directory',
+    link: 'https://4citeb4u.github.io/Thewaterholeprojectt/',
+  }
+];
+
 const skills = {
-  Frontend: ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React'],
-  Backend: ['Python', 'FastAPI', 'Node.js', 'Docker', 'Shell'],
+  'Frontend': ['HTML', 'CSS', 'JavaScript', 'TypeScript', 'React'],
+  'Backend': ['Python', 'FastAPI', 'Node.js', 'Docker', 'Shell'],
   'AI & Voice': ['Gemini 2.5', 'Whisper', 'LiveKit', 'GPT-engineer', 'LLaMA'],
-  Tools: ['GitHub', 'Trello', 'Peachtree', 'EmailJS', 'Slack', 'Microsoft Office'],
+  'Tools': ['GitHub', 'Trello', 'Peachtree', 'EmailJS', 'Slack', 'Microsoft Office'],
 };
 
 const certifications = [
@@ -83,13 +112,15 @@ const certifications = [
   'CPMM (Certified Property Maintenance Manager)',
   'FEMA IS-100.C',
   'DOT/TSI Compliance Training (SMS Awareness, Distracted Driving, Sleep Apnea, Rail Nomenclature)',
+  'TWIC Certified',
+  'CPR/AED Certified',
 ];
 
 const awards = [
     'City of Milwaukee Fleet Maintenance Commendation',
     'Public Works Safety Excellence Award',
     'Milwaukee Youth Mentorship Leader',
-    'TWIC Certified, DOT/FEMA Compliance',
+    'Streetcar Operator Recognition - The Hop',
 ];
 
 const communityRoles = [
@@ -170,6 +201,23 @@ export function ResumePage() {
         </section>
 
         <section className="section">
+           <h2 className="flex items-center gap-3">
+            <HardHat size={28} /> Projects
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+            {projects.map((project, idx) => (
+               <div key={idx} className="project-card border border-gray-200 p-4 rounded-lg bg-gray-50/50 hover:shadow-md transition-shadow">
+                <h3 className="font-semibold text-primary text-lg">{project.title}</h3>
+                <p className="text-gray-600 text-sm mb-2">{project.description}</p>
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-blue-600 hover:underline">
+                  Visit Site &rarr;
+                </a>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="section">
           <h2 className="flex items-center gap-3">
             <Briefcase size={28} /> Experience
           </h2>
@@ -192,7 +240,7 @@ export function ResumePage() {
           <h2 className="flex items-center gap-3">
             <Wrench size={28} /> Technical Skills
           </h2>
-          <ul>
+          <ul className="columns-1 md:columns-2">
             {Object.entries(skills).map(([category, skillList]) => (
               <li key={category}>
                 <strong>{category}:</strong> {skillList.join(', ')}
@@ -207,7 +255,7 @@ export function ResumePage() {
           </h2>
           <ul className="columns-1 md:columns-2">
             {certifications.map((item, idx) => (
-              <li key={idx}>{item}</li>
+              <li key={idx} className="mb-1">{item}</li>
             ))}
           </ul>
         </section>
@@ -218,7 +266,7 @@ export function ResumePage() {
           </h2>
           <ul className="columns-1 md:columns-2">
             {awards.map((item, idx) => (
-              <li key={idx}>{item}</li>
+              <li key={idx} className="mb-1">{item}</li>
             ))}
           </ul>
         </section>
@@ -259,3 +307,5 @@ export function ResumePage() {
     </div>
   );
 }
+
+    
