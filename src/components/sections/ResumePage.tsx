@@ -34,7 +34,7 @@ const experiences = [
       'Forked and contributed to GPT-engineer, BitNet, Whisper.'
     ],
   },
-  {
+   {
     role: 'Owner / Fleet Manager',
     company: 'Carriers Logistics LLC – Milwaukee, WI (2008 – Present)',
     items: [
@@ -160,7 +160,7 @@ export function ResumePage() {
         windowWidth: content.scrollWidth,
         windowHeight: content.scrollHeight,
       });
-
+      
       const pdf = new jsPDF({
         orientation: 'p',
         unit: 'mm',
@@ -172,21 +172,24 @@ export function ResumePage() {
       
       const canvasWidth = canvas.width;
       const canvasHeight = canvas.height;
-      const canvasAspectRatio = canvasWidth / canvasHeight;
-
-      const imgHeightInPdf = pdfWidth / canvasAspectRatio;
       
-      let heightLeft = imgHeightInPdf;
+      const ratio = canvasWidth / pdfWidth;
+      const canvasHeightInPdf = canvasHeight / ratio;
+
       let position = 0;
+      let page = 1;
 
-      pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, imgHeightInPdf);
-      heightLeft -= pdfHeight;
+      pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, canvasHeightInPdf);
 
-      while (heightLeft > 0) {
-        position -= pdfHeight;
-        pdf.addPage();
-        pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, imgHeightInPdf);
-        heightLeft -= pdfHeight;
+      let heightLeft = canvasHeightInPdf;
+
+      // This is a rough estimation of page breaks. For more precise control, 
+      // you might need a more sophisticated library or approach.
+      while (heightLeft > pdfHeight) {
+          heightLeft -= pdfHeight;
+          position -= pdfHeight;
+          pdf.addPage();
+          pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, canvasHeightInPdf);
       }
       
       pdf.save('Leonard-Lee-Resume.pdf');
@@ -259,7 +262,7 @@ export function ResumePage() {
           </div>
         </section>
 
-        <section className="section">
+        <section className="section print-break-before">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Briefcase size={24} /> Experience
           </h2>
@@ -291,7 +294,7 @@ export function ResumePage() {
           </ul>
         </section>
 
-         <section className="section">
+         <section className="section print-break-before">
           <h2 className="flex items-center gap-3 text-2xl text-teal-700 border-b-2 border-teal-100 pb-2 mb-4 mt-6">
             <Award size={24} /> Certifications
           </h2>
@@ -349,5 +352,3 @@ export function ResumePage() {
     </div>
   );
 }
-
-    
