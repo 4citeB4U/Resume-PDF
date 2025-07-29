@@ -247,7 +247,7 @@ export function ResumePage() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
             {projects.map((project, idx) => (
-               <div key={idx} className="project-card border border-gray-200 p-3 rounded-lg bg-gray-50/50 hover:shadow-md transition-shadow duration-300 ease-in-out">
+               <div key={idx} className="project-card border border-gray-200 p-2 rounded-lg bg-gray-50/50 hover:shadow-md transition-shadow duration-300 ease-in-out">
                 <h3 className="font-semibold text-teal-600 text-lg">{project.title}</h3>
                 <p className="text-gray-600 text-sm mb-2">{project.description}</p>
                 <a href={project.link} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-blue-600 hover:underline">
@@ -264,7 +264,7 @@ export function ResumePage() {
           </h2>
           <div className="space-y-4 mt-6">
             {experiences.map((exp, idx) => (
-              <div key={idx} className={`experience-card border border-gray-200 p-3 rounded-lg bg-gray-50/50 ${exp.role === 'Landscape Crew Manager' ? 'mt-6' : ''}`}>
+              <div key={idx} className="experience-card border border-gray-200 p-2 rounded-lg bg-gray-50/50">
                 <h3 className="text-xl font-semibold text-gray-900">{exp.role}</h3>
                 <p className="text-md text-gray-600 mb-2">{exp.company}</p>
                 <ul className="list-disc list-inside space-y-1 text-gray-700 pl-2">
