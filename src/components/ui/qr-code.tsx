@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import QRCode from 'qrcode.js';
+import QRCode from 'qrcode';
 
 interface QRCodeProps {
   value: string;
@@ -14,36 +14,22 @@ export function QRCodeComponent({ value, size = 80, className = '' }: QRCodeProp
 
   useEffect(() => {
     if (canvasRef.current) {
-      const qr = new QRCode({
-        text: value,
+      QRCode.toCanvas(canvasRef.current, value, {
         width: size,
-        height: size,
-        colorDark: '#000000',
-        colorLight: '#ffffff',
-        correctLevel: QRCode.CorrectLevel.M,
+        margin: 1,
+        color: {
+          dark: '#000000',
+          light: '#ffffff'
+        }
+      }).catch((err) => {
+        console.error('QR Code generation failed:', err);
       });
-      
-      // Clear the canvas
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        // Create an image from the QR code
-        const img = new Image();
-        img.onload = () => {
-          ctx.drawImage(img, 0, 0, size, size);
-        };
-        img.src = qr.toDataURL();
-      }
     }
   }, [value, size]);
 
   return (
     <canvas
       ref={canvasRef}
-      width={size}
-      height={size}
       className={className}
     />
   );
