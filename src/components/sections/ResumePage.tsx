@@ -148,65 +148,67 @@ const education = {
 
 
 export function ResumePage() {
-    const handleDownloadPdf = () => {
+    const handleDownloadPdf = async () => {
     const content = document.getElementById('resume-content');
     const downloadButton = document.getElementById('download-button');
 
-    if (content) {
-      if (downloadButton) downloadButton.style.display = 'none';
+    if (!content) {
+      console.error('Resume content element not found');
+      return;
+    }
 
-      html2canvas(content, {
-        scale: 2, // Improves quality
+    if (downloadButton) downloadButton.style.display = 'none';
+
+    try {
+      // Standard A4 paper size in pixels at 96 DPI
+      // A4 is 210mm x 297mm.
+      // We will render the content at a width that fits a PDF page.
+      const A4_PAPER_WIDTH_MM = 210;
+      const A4_PAPER_HEIGHT_MM = 297;
+      
+      const canvas = await html2canvas(content, {
+        scale: 2, // Use a higher scale for better quality
         useCORS: true,
         logging: false,
-        onclone: (document) => {
-            const clonedContent = document.getElementById('resume-content');
-            if (clonedContent) {
-                // Ensure no shadows or borders on the cloned element for PDF
-                clonedContent.style.boxShadow = 'none';
-                clonedContent.style.border = 'none';
-                clonedContent.style.margin = '0';
-                clonedContent.style.padding = '0';
-            }
-        }
-      }).then((canvas) => {
-        
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4'); // A4 size in mm
-        
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        
-        const canvasWidth = canvas.width;
-        const canvasHeight = canvas.height;
-        
-        // Calculate the aspect ratio
-        const ratio = canvasWidth / canvasHeight;
-        const imgHeightInPdf = pdfWidth / ratio;
-
-        let heightLeft = imgHeightInPdf;
-        let position = 0;
-
-        // Add the first page
-        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeightInPdf);
-        heightLeft -= pdfHeight;
-
-        // Add new pages if the content is longer than one page
-        while (heightLeft > 0) {
-          position = -heightLeft;
-          pdf.addPage();
-          pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeightInPdf);
-          heightLeft -= pdfHeight;
-        }
-
-        pdf.save('Leonard-Lee-Resume.pdf');
-
-        if (downloadButton) downloadButton.style.display = 'block';
-
-      }).catch((error) => {
-        console.error("Error generating PDF:", error);
-        if (downloadButton) downloadButton.style.display = 'block';
       });
+
+      const canvasWidth = canvas.width;
+      const canvasHeight = canvas.height;
+      const canvasAspectRatio = canvasWidth / canvasHeight;
+
+      const pdf = new jsPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'a4',
+      });
+
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      
+      // Calculate the height of the canvas image in the PDF
+      const imgHeightInPdf = pdfWidth / canvasAspectRatio;
+      
+      let heightLeft = imgHeightInPdf;
+      let position = 0;
+
+      // Add the first page
+      pdf.addImage(canvas, 'PNG', 0, 0, pdfWidth, imgHeightInPdf);
+      heightLeft -= pdfHeight;
+
+      // Add new pages if content is longer than one page
+      while (heightLeft > 0) {
+        position = -heightLeft;
+        pdf.addPage();
+        pdf.addImage(canvas, 'PNG', 0, position, pdfWidth, imgHeightInPdf);
+        heightLeft -= pdfHeight;
+      }
+      
+      pdf.save('Leonard-Lee-Resume.pdf');
+
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    } finally {
+      if (downloadButton) downloadButton.style.display = 'block';
     }
   };
 
@@ -361,4 +363,3 @@ export function ResumePage() {
     </div>
   );
 }
-
